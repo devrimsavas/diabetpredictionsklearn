@@ -4,15 +4,21 @@ from sklearn.tree import DecisionTreeClassifier, plot_tree
 from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay, accuracy_score, precision_score, recall_score, f1_score
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import LabelEncoder
+
 #for graphics and gui 
 import tkinter as tk
 from tkinter import ttk,Canvas,PhotoImage
 from PIL import Image, ImageTk
+
+
 #for graphic
 import matplotlib.pyplot as plt
+
 #pandas for data read
 import pandas as pd
 import io 
+
+
 
 # open csv document
 df = pd.read_csv('diabetes.csv')
@@ -44,6 +50,7 @@ y=df[output_column_name]
 #test
 print(y)
 
+
 #now we split data into training and testing sets with sklearn train_test_split %20 and %80 
 X_train,X_test,y_train,y_test=train_test_split(X,y,test_size=0.2,random_state=42)
 
@@ -53,6 +60,7 @@ dtree=dtree.fit(X_train,y_train)
 
 #Predict using the test test
 y_pred=dtree.predict(X_test)
+
 
 # Evaluation metrics
 accuracy = accuracy_score(y_test, y_pred)
@@ -113,9 +121,14 @@ def populate_tree(tree, dataframe):
         tree.insert("", 0, values=list(row))
 
 # Function to display the decision tree in a new window
+
+
+
 def show_decision_tree():
     tree_win = tk.Toplevel(root)
     tree_win.title("Decision Tree")
+    
+
     buf = io.BytesIO()
     fig, ax = plt.subplots(figsize=(40, 23), dpi=50)  #adjust for your screen
     plot_tree(dtree, feature_names=feature_column_names, filled=True, fontsize=10, ax=ax, proportion=True)
@@ -128,6 +141,8 @@ def show_decision_tree():
     tree_label = ttk.Label(tree_win, image=tkimg_tree)
     tree_label.image = tkimg_tree
     tree_label.pack(padx=20, pady=20)
+
+
 
 def predict_new_data():
     #  values from input entries 
@@ -156,6 +171,9 @@ def predict_new_data():
 
 def on_quit():
     root.destroy()
+
+
+    
 
 def show_about():
     text = """
@@ -188,7 +206,7 @@ Outcome: Class variable (0 or 1)
 
 
 
-########Graphic 
+
 
 # GUI setup
 root = tk.Tk()
@@ -197,6 +215,8 @@ root.geometry("1800x1000")
 root.resizable(False,False)
 
 root.config(bg="lightgray")
+
+
 
 # Creating a main menu bar
 menu = tk.Menu(root)
@@ -267,6 +287,8 @@ results_display.insert(tk.END, "Interpretation: F1 Score is the weighted average
 
 results_display.config(state=tk.DISABLED)
 
+
+
 # Button to display decision tree
 tree_btn = ttk.Button(root, text="Show Decision Tree", command=show_decision_tree)
 tree_btn.place(x=10,y=800)
@@ -293,3 +315,7 @@ result_display.place(x=970, y=450 + (len(feature_column_names) + 1) * 30, width=
 
 
 root.mainloop()
+
+
+
+
